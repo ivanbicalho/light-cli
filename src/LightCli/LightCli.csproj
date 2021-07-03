@@ -1,0 +1,23 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.1</TargetFramework>
+    <Authors>Ivan Bicalho</Authors>
+    <PackageIcon>LightCli.png</PackageIcon>
+    <RepositoryType>git</RepositoryType>
+    <PackageTags>cli dotnet args terminal</PackageTags>
+    <PackageRequireLicenseAcceptance>false</PackageRequireLicenseAcceptance>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <Description>LightCli is a helper for creating memorable command line interfaces for .NET. Never worry about the args[] parameter again! :)</Description>
+    <Copyright></Copyright>
+    <PackageProjectUrl>https://github.com/ivanbicalho/light-cli.git</PackageProjectUrl>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\LightCli.png">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>

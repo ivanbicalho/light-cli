@@ -8,6 +8,7 @@ using LightCli.Attributes;
 using LightCli.Commands;
 using LightCli.Playground.Commands;
 using LightCli.Printers;
+using LightCli.Printers.Custom;
 
 namespace LightCli.Playground
 {
@@ -19,7 +20,7 @@ namespace LightCli.Playground
             public int Id { get; set; }
         }
 
-        public class Customer
+        public class Customer : ICustomColor<Customer>
         {
             [Print(1)]
             public int Id { get; set; }
@@ -29,14 +30,28 @@ namespace LightCli.Playground
 
             [Print(3, title: "R$", color: ConsoleColor.Green)]
             public double Money { get; set; }
+
+            public ConsoleColor? CustomColor(string propertyName, Customer customer)
+            {
+                if (propertyName == "Money" && customer.Money < 0)
+                    return ConsoleColor.Red;
+
+                return null;
+            }
+
+            public string CustomTextFormat(string propertyName, Customer customer)
+            {
+                return "";
+            }
         }
+
 
         static async Task Main(string[] args)
         {
             await Print();
-            await BasicCommand();
-            await AdvancedCommand();
-            await NoCommand();
+            //await BasicCommand();
+            //await AdvancedCommand();
+            //await NoCommand();
         }
 
         private static async Task Print()
@@ -45,7 +60,7 @@ namespace LightCli.Playground
             {
                 new Customer {Id = 1, Name = "John", Money = 100.33},
                 new Customer {Id = 789, Name = "Silva Custom Name", Money = 2311.21},
-                new Customer {Id = 1500, Name = "Maria", Money = 0.12}
+                new Customer {Id = 1500, Name = "Maria", Money = -1.12}
             };
 
             TablePrinter.Print(items);

@@ -79,8 +79,7 @@ namespace LightCli.Printers
                 foreach (var property in properties.OrderBy(x => x.Attribute.Order))
                 {
                     var text = property.PropertyInfo.GetValue(item).ToString();
-                    var column = new RowColumn<T>(item, property.PropertyInfo.Name, text, property.Attribute.MaxSize, property.Attribute.PostTextWhenBreak, 
-                        property.Attribute.Color);
+                    var column = new RowColumn<T>(item, property.PropertyInfo, property.Attribute);
                     row.Columns.Add(column);
                 }
 

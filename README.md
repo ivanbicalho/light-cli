@@ -132,29 +132,97 @@ static async Task Main(string[] args)
 Now is quite easy to print a pretty table. Everything you have to do is decorate your members class with the Print attribute and use our **TablePrinter**.
 
 ```csharp
+public class Customer
+{
+    [Print(order: 1)]
+    public int Id { get; set; }
+
+    [Print(order: 2, title: "Full Name")]
+    public string Name { get; set; }
+
+    [Print(order: 3, title: "R$")]
+    public double Money { get; set; }
+}
+
 static async Task Main(string[] args)
 {
-    var runner = new CliRunner();
-    runner.AddCommand(new UpdateCommand());
-    // add all the others commands
-
-    var result = await runner.Run(args);
-
-    // all good, then break
-    if (result.Success)
-        return;
-
-    // write the message indicating the problem
-    Console.WriteLine(result.Message);
-
-    // if the command wasn't found, show default message with available commands
-    if (result.Command == null)
+    var items = new List<Customer>
     {
-        runner.ShowDefaultAvailableCommandsMessage();
-        return;
-    }
+        new Customer {Id = 1, Name = "John", Money = 100.33},
+        new Customer {Id = 789, Name = "Silva Custom Name", Money = 2311.21},
+        new Customer {Id = 1500, Name = "Maria", Money = -1.12}
+    };
 
-    // if the command was found, show the help message for this specific command
-    result.Command.ShowDefaultHelp();
+    TablePrinter.Print(items);
+
+    await Task.FromResult(0);
 }
 ```
+
+The result is like this:
+
+![table1.png](img/table1.png)
+
+## Printing a table - Basic customizations
+
+You can do basic customizations directly on the attribute [Print], as showed below:
+
+```csharp
+public class Customer
+{
+    [Print(order: 1)]
+    public int Id { get; set; }
+
+    [Print(order: 2, title: "Full Name", maxSize: 13, postTextWhenBreak: "...", color: ConsoleColor.Yellow)]
+    public string Name { get; set; }
+
+    [Print(order: 3, title: "R$", color: ConsoleColor.Green)]
+    public double Money { get; set; }            
+}
+```
+
+The result should be:
+
+![table2.png](img/table2.png)
+
+## Printing a table - Advanced customizations
+
+Advanced customizations allows you change de format and color from a specific item. You can implement it as you want:
+
+```csharp
+public class Customer : ICustomColor<Customer>, ICustomFormat<Customer>
+{
+    [Print(order: 1)]
+    public int Id { get; set; }
+
+    [Print(order: 2, title: "Full Name", maxSize: 13, postTextWhenBreak: "...", color: ConsoleColor.Yellow)]
+    public string Name { get; set; }
+
+    [Print(order: 3, title: "R$", color: ConsoleColor.Green)]
+    public double Money { get; set; }
+
+    public ConsoleColor? CustomColor(string propertyName, Customer customer)
+    {
+        // customizing the color for the "Money" property when less than zero
+        if (propertyName == "Money" && customer.Money < 0)
+            return ConsoleColor.Red;
+
+        // return null if you don't want to do others customizations
+        return null;
+    }
+
+    public string CustomFormat(string propertyName, Customer customer)
+    {
+        // customizing the formatting for the "Name" property
+        if (propertyName == "Name")
+            return customer.Name.ToUpper();
+
+        // return null if you don't want to do others customizations
+        return null;
+    }
+}
+```
+
+The result:
+
+![table3.png](img/table3.png)

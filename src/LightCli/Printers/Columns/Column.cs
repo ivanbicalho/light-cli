@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace LightCli.Printers.Columns
 {
@@ -13,6 +11,7 @@ namespace LightCli.Printers.Columns
         public int MaxSize { get; set; }
         public string PostTextWhenBreak { get; protected set; }
         public ConsoleColor Color { get; protected set; }
+
         public abstract void Print();
 
         protected static string BreakOriginalText(string text, int maxSize, string postTextWhenBreak)

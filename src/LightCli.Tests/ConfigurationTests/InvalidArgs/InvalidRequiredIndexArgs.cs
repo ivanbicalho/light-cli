@@ -26,7 +26,7 @@ namespace LightCli.Tests.ConfigurationTests.InvalidArgs
 
     public class InvalidRequiredIndexArgsC : IArgs
     {
-        [IndexArg(1, required:true, defaultValue:"1")]
+        [IndexArg(1, required: true, defaultValue: "1")]
         public int Arg1 { get; set; }
     }
 }

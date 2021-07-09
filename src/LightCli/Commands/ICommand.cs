@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using LightCli.Args;
 
 namespace LightCli.Commands
 {
@@ -9,7 +8,9 @@ namespace LightCli.Commands
         string CommandName { get; }
         string Description { get; }
         string ExampleUsage { get; }
+
         void ShowDefaultHelp();
+
         Task Run(string[] args);
     }
 }

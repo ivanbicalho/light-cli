@@ -29,7 +29,7 @@ namespace LightCli.Printers.Columns
         {
             Console.ForegroundColor = _customColor?.CustomColor(_propertyInfo.Name, _item) ?? Color;
             Console.Write(Text);
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Gray;
         }
     }
 }

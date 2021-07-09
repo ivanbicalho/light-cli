@@ -1,8 +1,4 @@
 using System.Threading.Tasks;
-using LightCli.Args;
-using LightCli.Exceptions;
-using LightCli.Results;
-using LightCli.Tests.ConfigurationTests.InvalidArgs;
 using Xunit;
 
 namespace LightCli.Tests.ParametersTests

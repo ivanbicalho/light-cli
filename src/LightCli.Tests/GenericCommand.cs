@@ -1,6 +1,6 @@
-﻿using System.Threading.Tasks;
-using LightCli.Args;
+﻿using LightCli.Args;
 using LightCli.Commands;
+using System.Threading.Tasks;
 
 namespace LightCli.Tests
 {

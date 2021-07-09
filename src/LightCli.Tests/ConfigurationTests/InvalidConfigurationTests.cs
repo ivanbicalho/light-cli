@@ -1,7 +1,6 @@
-using System.Threading.Tasks;
-using LightCli.Args;
 using LightCli.Exceptions;
 using LightCli.Tests.ConfigurationTests.InvalidArgs;
+using System.Threading.Tasks;
 using Xunit;
 
 namespace LightCli.Tests.ConfigurationTests

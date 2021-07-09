@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
-using LightCli.Args;
+﻿using LightCli.Args;
 using LightCli.Commands;
 using LightCli.Results;
+using System.Threading.Tasks;
 
 namespace LightCli.Tests
 {

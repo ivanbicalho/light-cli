@@ -8,7 +8,7 @@ namespace LightCli.Tests.ConfigurationTests.ValidArgs
         [IndexArg(1, required: false, defaultValue: "1")]
         public int Arg1 { get; set; }
 
-        [IndexArg(2, required:false, defaultValue:"test")]
+        [IndexArg(2, required: false, defaultValue: "test")]
         public string Arg2 { get; set; }
     }
 }

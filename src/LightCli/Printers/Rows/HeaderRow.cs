@@ -1,20 +1,19 @@
-﻿using System;
+﻿using LightCli.Printers.Columns;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace LightCli.Printers
+namespace LightCli.Printers.Rows
 {
-    internal class Row
+    internal class HeaderRow
     {
-        protected internal bool IsHeaderRow = false;
-
         public void Print()
         {
             foreach (var column in Columns)
             {
-                column.Print(IsHeaderRow);
-                Console.Write(Column.Divisor);
+                column.Print();
+                Console.Write(Table.Divisor);
             }
 
             Console.WriteLine();
@@ -22,7 +21,7 @@ namespace LightCli.Printers
 
         public void PrintDivisorLine()
         {
-            var lineSize = Columns.Sum(x => x.Text.Length) + Columns.Count * Column.Divisor.Length - 1;
+            var lineSize = Columns.Sum(x => x.Text.Length) + Columns.Count * Table.Divisor.Length - 1;
 
             for (var i = 0; i < lineSize; i++)
             {
@@ -32,6 +31,6 @@ namespace LightCli.Printers
             Console.WriteLine();
         }
 
-        public List<Column> Columns { get; } = new List<Column>();
+        public List<HeaderColumn> Columns { get; } = new List<HeaderColumn>();
     }
 }

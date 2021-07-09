@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using LightCli.Attributes;
 using LightCli.Exceptions;
+using LightCli.Printers.Columns;
+using LightCli.Printers.Rows;
 
 namespace LightCli.Printers
 {
@@ -38,7 +40,7 @@ namespace LightCli.Printers
 
             foreach (var property in properties)
             {
-                if (property.Attribute.MaxSize <= 0)
+                if (property.Attribute.MaxSize != -1 && property.Attribute.MaxSize <= 0)
                     throw new InvalidConfigurationException($"Invalid 'MaxSize' for the property '{property.PropertyInfo.Name}'. Value has to be greater than zero");
 
                 if (!string.IsNullOrEmpty(property.Attribute.PostTextWhenBreak))
@@ -61,7 +63,7 @@ namespace LightCli.Printers
                     continue;
 
                 var text = attribute.Title ??= property.Name;
-                table.Header.Columns.Add(new Column(text, attribute.MaxSize, attribute.PostTextWhenBreak, attribute.Color));
+                table.Header.Columns.Add(new HeaderColumn(text, attribute.MaxSize, attribute.PostTextWhenBreak, attribute.Color));
 
                 properties.Add(new Property { Attribute = attribute, PropertyInfo = property });
             }
@@ -77,7 +79,7 @@ namespace LightCli.Printers
                 foreach (var property in properties.OrderBy(x => x.Attribute.Order))
                 {
                     var text = property.PropertyInfo.GetValue(item).ToString();
-                    var column = new Column(text, property.Attribute.MaxSize, property.Attribute.PostTextWhenBreak,
+                    var column = new RowColumn<T>(item, property.PropertyInfo.Name, text, property.Attribute.MaxSize, property.Attribute.PostTextWhenBreak, 
                         property.Attribute.Color);
                     row.Columns.Add(column);
                 }

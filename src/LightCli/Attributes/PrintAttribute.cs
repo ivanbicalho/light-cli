@@ -1,14 +1,11 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Transactions;
 
 namespace LightCli.Attributes
 {
     [AttributeUsage(AttributeTargets.Property)]
     public class PrintAttribute : Attribute
     {
-        public PrintAttribute(int order, string title = null, int maxSize = -1, string postTextWhenBreak = null, string toStringFormat = null, ConsoleColor color = ConsoleColor.White)
+        public PrintAttribute(int order, string title = null, int maxSize = -1, string postTextWhenBreak = null, string toStringFormat = null, ConsoleColor color = ConsoleColor.Gray)
         {
             Order = order;
             Title = title;

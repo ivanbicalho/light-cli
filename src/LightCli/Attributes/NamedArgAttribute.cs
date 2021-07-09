@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
-using System.Transactions;
 
 namespace LightCli.Attributes
 {
@@ -16,7 +14,7 @@ namespace LightCli.Attributes
             Required = required;
             DefaultValue = defaultValue;
         }
-        
+
         public string ShortName { get; }
         public string FullName { get; }
         public string Description { get; }

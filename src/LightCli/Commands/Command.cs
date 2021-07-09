@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using System.Linq;
-using System.Reflection;
-using LightCli.Args;
+﻿using LightCli.Args;
 using LightCli.Attributes;
 using LightCli.Exceptions;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace LightCli.Commands
 {
@@ -26,6 +23,7 @@ namespace LightCli.Commands
         public abstract string ExampleUsage { get; }
 
         protected abstract Task Run(T args);
+
         public async Task Run(string[] args)
         {
             var newArgs = Converter<T>.Convert(args);

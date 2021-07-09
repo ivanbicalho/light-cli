@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using LightCli.Commands;
 using System.Threading.Tasks;
-using LightCli.Commands;
 
 namespace LightCli.Playground.Commands
 {
@@ -11,6 +8,7 @@ namespace LightCli.Playground.Commands
         public override string CommandName => "update";
         public override string Description => "Update a customer information";
         public override string ExampleUsage => $"{CommandName} -id 1 -n John";
+
         protected override async Task Run(UpdateCommandArgs args)
         {
             // your code here...

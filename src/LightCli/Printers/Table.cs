@@ -1,9 +1,7 @@
 ﻿using LightCli.Printers.Columns;
 using LightCli.Printers.Rows;
-using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace LightCli.Printers
 {

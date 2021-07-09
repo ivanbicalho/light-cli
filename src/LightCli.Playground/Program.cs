@@ -1,18 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq.Expressions;
-using System.Net;
-using System.Threading.Tasks;
-using LightCli.Args;
+﻿using LightCli.Args;
 using LightCli.Attributes;
-using LightCli.Commands;
 using LightCli.Playground.Commands;
 using LightCli.Printers;
 using LightCli.Printers.Custom;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace LightCli.Playground
 {
-    class Program
+    internal class Program
     {
         public class MyArgs : IArgs
         {
@@ -20,35 +17,85 @@ namespace LightCli.Playground
             public int Id { get; set; }
         }
 
-        public class Customer : ICustomColor<Customer>
+        //public class Customer : ICustomColor<Customer>
+        //{
+        //    [Print(1)]
+        //    public int Id { get; set; }
+
+        //    [Print(2, title: "Full Name", maxSize: 10, postTextWhenBreak: "..", color: ConsoleColor.DarkBlue)]
+        //    public string Name { get; set; }
+
+        //    [Print(3, title: "R$", color: ConsoleColor.Green)]
+        //    public double Money { get; set; }
+
+        //    public ConsoleColor? CustomColor(string propertyName, Customer customer)
+        //    {
+        //        if (propertyName == "Money" && customer.Money < 0)
+        //            return ConsoleColor.Red;
+
+        //        return null;
+        //    }
+
+        //    public string CustomTextFormat(string propertyName, Customer customer)
+        //    {
+        //        return "";
+        //    }
+        //}
+
+        //public ConsoleColor? CustomColor(string propertyName, Customer customer)
+        //{
+        //    if (propertyName == "Money" && customer.Money < 0)
+        //        return ConsoleColor.Red;
+
+        //    return null;
+        //}
+
+        public class Customer : ICustomColor<Customer>, ICustomFormat<Customer>
         {
-            [Print(1)]
+            [Print(order: 1)]
             public int Id { get; set; }
 
-            [Print(2, title: "Full Name", maxSize: 10, postTextWhenBreak: "..", color: ConsoleColor.DarkBlue)]
+            [Print(order: 2, title: "Full Name", maxSize: 13, postTextWhenBreak: "...", color: ConsoleColor.Yellow)]
             public string Name { get; set; }
 
-            [Print(3, title: "R$", color: ConsoleColor.Green)]
+            [Print(order: 3, title: "R$", color: ConsoleColor.Green)]
             public double Money { get; set; }
 
             public ConsoleColor? CustomColor(string propertyName, Customer customer)
             {
+                // customizing the color for the "Money" property when less than zero
                 if (propertyName == "Money" && customer.Money < 0)
                     return ConsoleColor.Red;
 
+                // return null if you don't want to do others customizations
                 return null;
             }
 
-            public string CustomTextFormat(string propertyName, Customer customer)
+            public string CustomFormat(string propertyName, Customer customer)
             {
-                return "";
+                // customizing the formatting for the "Name" property
+                if (propertyName == "Name")
+                    return customer.Name.ToUpper();
+
+                // return null if you don't want to do others customizations
+                return null;
             }
         }
 
-
-        static async Task Main(string[] args)
+        private static async Task Main(string[] args)
         {
-            await Print();
+            var items = new List<Customer>
+            {
+                new Customer {Id = 1, Name = "John", Money = 100.33},
+                new Customer {Id = 789, Name = "Silva Custom Name", Money = 2311.21},
+                new Customer {Id = 1500, Name = "Maria", Money = -1.12}
+            };
+
+            TablePrinter.Print(items);
+
+            await Task.FromResult(0);
+
+            //await Print();
             //await BasicCommand();
             //await AdvancedCommand();
             //await NoCommand();

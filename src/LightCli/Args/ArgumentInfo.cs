@@ -1,7 +1,7 @@
-﻿using System;
+﻿using LightCli.Attributes;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
-using LightCli.Attributes;
 
 namespace LightCli.Args
 {

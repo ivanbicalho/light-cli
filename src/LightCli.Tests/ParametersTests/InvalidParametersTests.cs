@@ -1,8 +1,5 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using LightCli.Args;
-using LightCli.Results;
-using LightCli.Tests.ConfigurationTests.InvalidArgs;
 using Xunit;
 
 namespace LightCli.Tests.ParametersTests
@@ -35,7 +32,7 @@ namespace LightCli.Tests.ParametersTests
         {
             var args = new[] { "invalid_command_name", "-id", "1", "-n", "test" };
             var result = await Util.Run<NamedArgs>(args);
-            
+
             Assert.False(result.Success);
             Assert.Null(result.Command);
             Assert.NotNull(result.Message);

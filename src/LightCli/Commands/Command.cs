@@ -7,6 +7,10 @@ using System.Threading.Tasks;
 
 namespace LightCli.Commands
 {
+    /// <summary>
+    /// Represents the command that can be executed
+    /// </summary>
+    /// <typeparam name="T">Arguments type</typeparam>
     public abstract class Command<T> : ICommand where T : IArgs, new()
     {
         protected Command(int commandIndex = 0)
@@ -30,6 +34,9 @@ namespace LightCli.Commands
             await Run(newArgs);
         }
 
+        /// <summary>
+        /// Shows a default help message
+        /// </summary>
         public void ShowDefaultHelp()
         {
             Console.WriteLine("Available arguments:");

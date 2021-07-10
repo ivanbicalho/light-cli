@@ -4,6 +4,9 @@ using System.Reflection;
 
 namespace LightCli.Args
 {
+    /// <summary>
+    /// Interface for argument class
+    /// </summary>
     public interface IArgs
     {
         /// <summary>
@@ -12,6 +15,10 @@ namespace LightCli.Args
         /// <returns>true if arguments are valid, otherwise false</returns>
         bool Validate() => true;
 
+        /// <summary>
+        /// Gets the information of all arguments
+        /// </summary>
+        /// <returns></returns>
         public IEnumerable<ArgumentInfo> GetArgumentsInfo()
         {
             foreach (var property in GetType().GetProperties(BindingFlags.Instance | BindingFlags.Public))

@@ -38,6 +38,13 @@ namespace LightCli
         {
             try
             {
+                if (property.PropertyType == typeof(Uri))
+                {
+                    var uri = new Uri(value);
+                    property.SetValue(arguments, uri);
+                    return;
+                }
+
                 var convertedValue = System.Convert.ChangeType(value, property.PropertyType);
                 property.SetValue(arguments, convertedValue);
             }

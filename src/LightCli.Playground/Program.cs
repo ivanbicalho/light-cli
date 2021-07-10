@@ -14,41 +14,11 @@ namespace LightCli.Playground
         public class MyArgs : IArgs
         {
             [IndexArg(0)]
-            public int Id { get; set; }
+            public Uri Link { get; set; }
+
+            [IndexArg(1)]
+            public DateTime Date { get; set; }
         }
-
-        //public class Customer : ICustomColor<Customer>
-        //{
-        //    [Print(1)]
-        //    public int Id { get; set; }
-
-        //    [Print(2, title: "Full Name", maxSize: 10, postTextWhenBreak: "..", color: ConsoleColor.DarkBlue)]
-        //    public string Name { get; set; }
-
-        //    [Print(3, title: "R$", color: ConsoleColor.Green)]
-        //    public double Money { get; set; }
-
-        //    public ConsoleColor? CustomColor(string propertyName, Customer customer)
-        //    {
-        //        if (propertyName == "Money" && customer.Money < 0)
-        //            return ConsoleColor.Red;
-
-        //        return null;
-        //    }
-
-        //    public string CustomTextFormat(string propertyName, Customer customer)
-        //    {
-        //        return "";
-        //    }
-        //}
-
-        //public ConsoleColor? CustomColor(string propertyName, Customer customer)
-        //{
-        //    if (propertyName == "Money" && customer.Money < 0)
-        //        return ConsoleColor.Red;
-
-        //    return null;
-        //}
 
         public class Customer : ICustomColor<Customer>, ICustomFormat<Customer>
         {
@@ -84,21 +54,10 @@ namespace LightCli.Playground
 
         private static async Task Main(string[] args)
         {
-            var items = new List<Customer>
-            {
-                new Customer {Id = 1, Name = "John", Money = 100.33},
-                new Customer {Id = 789, Name = "Silva Custom Name", Money = 2311.21},
-                new Customer {Id = 1500, Name = "Maria", Money = -1.12}
-            };
-
-            TablePrinter.Print(items);
-
-            await Task.FromResult(0);
-
             //await Print();
             //await BasicCommand();
             //await AdvancedCommand();
-            //await NoCommand();
+            await NoCommand();
         }
 
         private static async Task Print()
@@ -156,13 +115,14 @@ namespace LightCli.Playground
 
         private static async Task NoCommand()
         {
-            var args = new[] { "1", "2" };
+            var args = new[] { "http://google.com", "20/10/2021" };
 
             var runner = new CliRunner();
 
             await runner.RunWithoutCommand<MyArgs>(args, async myArgs =>
             {
-                // your code here...
+                Console.WriteLine(myArgs.Link);
+                Console.WriteLine(myArgs.Date);
             });
         }
     }

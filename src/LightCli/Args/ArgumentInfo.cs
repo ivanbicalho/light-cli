@@ -7,7 +7,7 @@ namespace LightCli.Args
 {
     public class ArgumentInfo
     {
-        public ArgumentInfo(PropertyInfo property, Attribute attribute)
+        internal ArgumentInfo(PropertyInfo property, Attribute attribute)
         {
             PropertyName = property.Name;
 

@@ -9,8 +9,16 @@ using System.Reflection;
 
 namespace LightCli.Printers
 {
+    /// <summary>
+    /// Table Printer
+    /// </summary>
     public static class TablePrinter
     {
+        /// <summary>
+        /// Prints a list of items. Make sure you set the Print attribute on the properties of this type T
+        /// </summary>
+        /// <typeparam name="T">Item type</typeparam>
+        /// <param name="items">List of items</param>
         public static void Print<T>(IEnumerable<T> items) where T : class
         {
             if (items == null || !items.Any())

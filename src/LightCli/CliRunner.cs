@@ -8,12 +8,20 @@ using System.Threading.Tasks;
 
 namespace LightCli
 {
+    /// <summary>
+    /// Runner configuration class
+    /// </summary>
     public class CliRunner
     {
         private readonly List<ICommand> _commands = new List<ICommand>();
 
         public IEnumerable<ICommand> Commands => _commands;
 
+        /// <summary>
+        /// Register a new command on the Runner
+        /// </summary>
+        /// <param name="command">Command to register</param>
+        /// <returns></returns>
         public CliRunner AddCommand(ICommand command)
         {
             if (_commands.Exists(c => c.CommandName == command.CommandName))
@@ -24,6 +32,12 @@ namespace LightCli
             return this;
         }
 
+
+        /// <summary>
+        /// Entry point to run the program considering the registered commands
+        /// </summary>
+        /// <param name="args">string args[] from Main class</param>
+        /// <returns>Result of the execution</returns>
         public async Task<CliCommandResult> Run(string[] args)
         {
             var resultNotFound = new CliCommandResult(false, null, "Command not found");
@@ -53,6 +67,13 @@ namespace LightCli
             return resultNotFound;
         }
 
+        /// <summary>
+        /// Entry point to run the program considering no commands
+        /// </summary>
+        /// <typeparam name="T">Arguments type</typeparam>
+        /// <param name="args">string args[] from Main class</param>
+        /// <param name="action"></param>
+        /// <returns>Result of the execution</returns>
         public async Task<CliNoCommandResult> RunWithoutCommand<T>(string[] args, Func<T, Task> action) where T : IArgs, new()
         {
             if (args == null || args.Length == 0)
@@ -70,6 +91,9 @@ namespace LightCli
             }
         }
 
+        /// <summary>
+        /// Shows default message with available registered commands
+        /// </summary>
         public void ShowDefaultAvailableCommandsMessage()
         {
             Console.WriteLine("Available commands:");

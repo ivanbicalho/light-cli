@@ -13,7 +13,7 @@ Deal with **args** is hard and easy to break your code:
 ```csharp
 static async Task Main(string[] args)
 { 
-    var id = Convert.ToInt32(args[0]); // dont't do this
+    var id = Convert.ToInt32(args[0]); // don't do this
 }
 ```
 

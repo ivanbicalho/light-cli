@@ -24,23 +24,21 @@ namespace LightCli.Printers
             if (items == null || !items.Any())
                 return;
 
-            var table = new Table();
-            var properties = new List<Property>();
-
-            SetHeadersAndGetProperties<T>(table, properties);
-
+            var properties = GetProperties<T>();
             ValidateProperties(properties);
 
+            var table = new Table();
+            SetHeaders(table, properties);
             SetRows(table, properties, items);
 
             table.Print();
         }
 
-        private static void ValidateProperties(IReadOnlyCollection<Property> properties)
+        private static void ValidateProperties(IEnumerable<Property> properties)
         {
             var countDistinctOrders = properties.Select(x => x.Attribute.Order).Distinct().Count();
 
-            if (properties.Count != countDistinctOrders)
+            if (properties.Count() != countDistinctOrders)
                 throw new InvalidConfigurationException($"Invalid orders. There are different properties with the same order");
 
             foreach (var property in properties)
@@ -57,9 +55,11 @@ namespace LightCli.Printers
             }
         }
 
-        private static void SetHeadersAndGetProperties<T>(Table table, ICollection<Property> properties)
+        private static IEnumerable<Property> GetProperties<T>()
             where T : class
         {
+            var properties = new List<Property>();
+
             foreach (var property in typeof(T).GetProperties(BindingFlags.Instance | BindingFlags.Public))
             {
                 var attribute = (PrintAttribute)property.GetCustomAttributes(typeof(PrintAttribute)).FirstOrDefault();
@@ -67,14 +67,22 @@ namespace LightCli.Printers
                 if (attribute == null)
                     continue;
 
-                var text = attribute.Title ??= property.Name;
-                table.Header.Columns.Add(new HeaderColumn(text, attribute.MaxSize, attribute.PostTextWhenBreak, attribute.Color));
-
                 properties.Add(new Property { Attribute = attribute, PropertyInfo = property });
+            }
+
+            return properties;
+        }
+
+        private static void SetHeaders(Table table, IEnumerable<Property> properties)
+        {
+            foreach (var property in properties.OrderBy(x => x.Attribute.Order))
+            {
+                var text = property.Attribute.Title ??= property.PropertyInfo.Name;
+                table.Header.Columns.Add(new HeaderColumn(text, property.Attribute.MaxSize, property.Attribute.PostTextWhenBreak, property.Attribute.Color));
             }
         }
 
-        private static void SetRows<T>(Table table, IReadOnlyCollection<Property> properties, IEnumerable<T> items)
+        private static void SetRows<T>(Table table, IEnumerable<Property> properties, IEnumerable<T> items)
             where T : class
         {
             foreach (var item in items)

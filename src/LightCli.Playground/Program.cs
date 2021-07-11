@@ -22,13 +22,13 @@ namespace LightCli.Playground
 
         public class Customer : ICustomColor<Customer>, ICustomFormat<Customer>
         {
-            [Print(order: 1)]
+            [Print(order: 4)]
             public int Id { get; set; }
 
             [Print(order: 2, title: "Full Name", maxSize: 13, postTextWhenBreak: "...", color: ConsoleColor.Yellow)]
             public string Name { get; set; }
 
-            [Print(order: 3, title: "R$", color: ConsoleColor.Green)]
+            [Print(order: 1, title: "R$", color: ConsoleColor.Green)]
             public double Money { get; set; }
 
             public ConsoleColor? CustomColor(string propertyName, Customer customer)
@@ -54,10 +54,10 @@ namespace LightCli.Playground
 
         private static async Task Main(string[] args)
         {
-            //await Print();
+            await Print();
             //await BasicCommand();
             //await AdvancedCommand();
-            await NoCommand();
+            //await NoCommand();
         }
 
         private static async Task Print()

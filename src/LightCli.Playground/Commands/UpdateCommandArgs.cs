@@ -6,7 +6,7 @@ namespace LightCli.Playground.Commands
     public class UpdateCommandArgs : IArgs
     {
         [NamedArg(shortName: "-id", fullName: "--identifier", description: "Customer's ID")]
-        public int Id { get; set; }
+        public int? Id { get; set; }
 
         [NamedArg(shortName: "-n", description: "Customer's name", required: false, defaultValue: "Unknown")]
         public string Name { get; set; }

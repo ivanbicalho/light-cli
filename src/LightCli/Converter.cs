@@ -20,6 +20,11 @@ namespace LightCli
                 SetPropertyValue(args, property, arguments);
             }
 
+            var message = arguments.Validate();
+
+            if (!string.IsNullOrWhiteSpace(message))
+                throw new CliException(message);
+
             return arguments;
         }
 

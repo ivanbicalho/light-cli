@@ -8,6 +8,6 @@ namespace LightCli.Printers.Custom
     /// <typeparam name="T">Type of the class that has [Print] attributes</typeparam>
     public interface ICustomColor<in T>
     {
-        ConsoleColor? CustomColor(string propertyName, T customer);
+        ConsoleColor? CustomColor(string propertyName, T item);
     }
 }

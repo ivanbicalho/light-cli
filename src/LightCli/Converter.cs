@@ -163,13 +163,16 @@ namespace LightCli
             if (!indexes.Any())
                 return;
 
-            var lastIndex = indexes.Max(x => x.Index);
-            var allIndexesOptional = !indexes.Any(x => x.Required);
-            var otherThanLastIndexOptional = indexes.Any(x => !x.Required && x.Index != lastIndex);
+            var haveToBeOptional = false;
+            foreach (var index in indexes)
+            {
+                if (haveToBeOptional && index.Required)
+                    throw new InvalidConfigurationException(
+                        $"Invalid configuration for indexes. All indexes have to be optional or if there are any required, they must be first");
 
-            if (!allIndexesOptional && otherThanLastIndexOptional)
-                throw new InvalidConfigurationException(
-                    $"Invalid configuration for indexes. All indexes have to be optional or if there are some required, only the last index can be optional");
+                if (!index.Required)
+                    haveToBeOptional = true;
+            }
         }
 
         private static void ValidateAttributes(IEnumerable<Attribute> attributes)

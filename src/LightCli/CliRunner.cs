@@ -104,9 +104,8 @@ namespace LightCli
                 Console.Write(command.CommandName);
                 Console.Write(": ");
                 Console.Write(command.Description);
+                Console.WriteLine();
             }
-
-            Console.WriteLine();
         }
     }
 }

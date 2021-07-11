@@ -12,8 +12,8 @@ namespace LightCli.Args
         /// <summary>
         /// Implement this method if you want to do an extra validation in the argument class
         /// </summary>
-        /// <returns>true if arguments are valid, otherwise false</returns>
-        bool Validate() => true;
+        /// <returns>null or empty if the arguments are valid, otherwise the message with the failed information</returns>
+        string Validate() => null;
 
         /// <summary>
         /// Gets the information of all arguments

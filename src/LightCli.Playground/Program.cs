@@ -54,8 +54,8 @@ namespace LightCli.Playground
 
         private static async Task Main(string[] args)
         {
-            await Print();
-            //await BasicCommand();
+            //await Print();
+            await BasicCommand();
             //await AdvancedCommand();
             //await NoCommand();
         }

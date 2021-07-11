@@ -50,8 +50,9 @@ namespace LightCli
                     return;
                 }
 
-                var convertedValue = System.Convert.ChangeType(value, property.PropertyType);
-                property.SetValue(arguments, convertedValue);
+                var type = Nullable.GetUnderlyingType(property.PropertyType) ?? property.PropertyType;
+                var safeValue = (value == null) ? null : System.Convert.ChangeType(value, type);
+                property.SetValue(arguments, safeValue, null);
             }
             catch
             {

@@ -81,14 +81,14 @@ static async Task Main(string[] args)
 
 ## No Commands usage
 
-There is another simple option to use the CLI without commands. For it, just call the operation **xxxx**:
+There is another simple option to use the CLI without commands. For it, just call the operation **RunWithoutCommand**:
 
 ```csharp
 static async Task Main(string[] args)
 { 
     var runner = new CliRunner();
 
-    await runner.RunWithoutCommand<MyArgs>(args, async myArgs =>
+    var result = await runner.RunWithoutCommand<MyArgs>(args, async myArgs =>
     {
         // your code here...
     });
@@ -124,6 +124,30 @@ static async Task Main(string[] args)
 
     // if the command was found, show the help message for this specific command
     result.Command.ShowDefaultHelp();
+}
+```
+
+You can manipulate results from an operation without commands, like below:
+
+```csharp
+static async Task Main(string[] args)
+{ 
+    var runner = new CliRunner();
+
+    var result = await runner.RunWithoutCommand<MyArgs>(args, async myArgs =>
+    {
+        // your code here...
+    });
+
+    // all good, then break
+    if (result.Success)
+        return;
+    
+    // write the message indicating the problem
+    Console.WriteLine(result.Message);
+
+    // show the help message for the args (in this case, MyArgs)
+    result.ShowDefaultArgsHelp();
 }
 ```
 

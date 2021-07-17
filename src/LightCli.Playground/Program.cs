@@ -56,8 +56,8 @@ namespace LightCli.Playground
         {
             //await Print();
             //await BasicCommand();
-            //await AdvancedCommand();
-            await NoCommand();
+            await AdvancedCommand();
+            //await NoCommand();
         }
 
         private static async Task Print()
@@ -124,6 +124,8 @@ namespace LightCli.Playground
                 Console.WriteLine(myArgs.Link);
                 Console.WriteLine(myArgs.Date);
             });
+
+            Console.WriteLine(result.Message);
 
             result.ShowDefaultArgsHelp();
         }

@@ -39,7 +39,7 @@ namespace LightCli
             }
         }
 
-        private static void SetValue(T arguments, PropertyInfo property, string value)
+        private static void SetValue(T arguments, PropertyInfo property, string value, string argName)
         {
             try
             {
@@ -56,7 +56,7 @@ namespace LightCli
             }
             catch
             {
-                throw new CliException($"Invalid value '{value}' for '{property.Name}'");
+                throw new CliException($"Invalid value '{value}' for {argName}");
             }
         }
 
@@ -73,20 +73,22 @@ namespace LightCli
             return null;
         }
 
-        private static void SetIndexArg(T arguments, PropertyInfo property, IndexArgAttribute attribute, string[] args)
+        private static void SetIndexArg(T arguments, PropertyInfo property, IndexArgAttribute indexArg, string[] args)
         {
-            if (args.Length <= attribute.Index)
-            {
-                if (attribute.Required)
-                    throw new CliException($"Argument {property.Name} is required");
+            var argName = $"index {indexArg.Index}";
 
-                if (attribute.HasDefaultValue)
-                    SetValue(arguments, property, attribute.DefaultValue);
+            if (args.Length <= indexArg.Index)
+            {
+                if (indexArg.Required)
+                    throw new CliException($"Argument {argName} is required");
+
+                if (indexArg.HasDefaultValue)
+                    SetValue(arguments, property, indexArg.DefaultValue, argName);
 
                 return;
             }
 
-            SetValue(arguments, property, args[attribute.Index]);
+            SetValue(arguments, property, args[indexArg.Index], argName);
         }
 
         private static void SetNamedArg(T arguments, PropertyInfo property, NamedArgAttribute namedArg,
@@ -118,15 +120,11 @@ namespace LightCli
             var value = shortNameIndex != -1 ? GetValue(argsList, shortNameIndex) : GetValue(argsList, fullNameIndex);
 
             if (value != null)
-                SetValue(arguments, property, value);
+                SetValue(arguments, property, value, namedArg.NamesAsString);
             else if (namedArg.Required)
-                throw new CliException($"Argument '{property.Name}' is required");
+                throw new CliException($"Argument {namedArg.NamesAsString} is required");
             else if (namedArg.HasDefaultValue)
-                SetValue(arguments, property, namedArg.DefaultValue);
-
-            // TODO: Verificação se value não é um parameter name da classe
-            //if (value != null)
-            //    value = command.Parameters.Contains(value) ? null : value;
+                SetValue(arguments, property, namedArg.DefaultValue, namedArg.NamesAsString);
         }
 
         private static void ValidateType(T arguments)

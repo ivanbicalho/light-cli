@@ -52,7 +52,7 @@ namespace LightCli.Commands
 
             foreach (var argument in arguments)
             {
-                ShowDefaultHelp(argument);
+                Console.WriteLine(argument.GetDefaultHelpMessage());
             }
 
             if (ExampleUsage != null)
@@ -66,39 +66,6 @@ namespace LightCli.Commands
                 Console.WriteLine();
                 Console.WriteLine("[] = optional arguments");
             }
-        }
-
-        private void ShowDefaultHelp(ArgumentInfo argument)
-        {
-            if (argument.Optional)
-                Console.Write("[");
-
-            if (argument.Type == typeof(IndexArgAttribute))
-            {
-                Console.Write("Index ");
-                Console.Write(argument.Index);
-            }
-            else
-            {
-                Console.Write(argument.NamesAsString);
-            }
-
-            if (argument.Optional)
-                Console.Write("]");
-
-            Console.Write(": ");
-            Console.Write(argument.Description);
-
-            if (!argument.Description.EndsWith("."))
-                Console.Write(".");
-
-            if (argument.DefaultValue != null)
-            {
-                Console.Write(" Default value: ");
-                Console.Write(argument.DefaultValue);
-            }
-
-            Console.WriteLine();
         }
     }
 }

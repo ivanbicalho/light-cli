@@ -13,7 +13,7 @@ namespace LightCli.Playground
     {
         public class MyArgs : IArgs
         {
-            [IndexArg(0)]
+            [IndexArg(0, "test item")]
             public Uri Link { get; set; }
 
             [IndexArg(1)]
@@ -55,9 +55,9 @@ namespace LightCli.Playground
         private static async Task Main(string[] args)
         {
             //await Print();
-            await BasicCommand();
+            //await BasicCommand();
             //await AdvancedCommand();
-            //await NoCommand();
+            await NoCommand();
         }
 
         private static async Task Print()
@@ -119,11 +119,13 @@ namespace LightCli.Playground
 
             var runner = new CliRunner();
 
-            await runner.RunWithoutCommand<MyArgs>(args, async myArgs =>
+            var result = await runner.RunWithoutCommand<MyArgs>(args, async myArgs =>
             {
                 Console.WriteLine(myArgs.Link);
                 Console.WriteLine(myArgs.Date);
             });
+
+            result.ShowDefaultArgsHelp();
         }
     }
 }

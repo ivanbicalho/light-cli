@@ -76,18 +76,20 @@ namespace LightCli
         /// <returns>Result of the execution</returns>
         public async Task<CliNoCommandResult> RunWithoutCommand<T>(string[] args, Func<T, Task> action) where T : IArgs, new()
         {
-            if (args == null || args.Length == 0)
-                return new CliNoCommandResult(false, $"Arguments cannot be null or empty");
+            var arguments = Activator.CreateInstance<T>().GetArgumentsInfo();
+
+            if ((args == null || args.Length == 0) && typeof(T) != typeof(NoArgs))
+                return new CliNoCommandResult(false, arguments, $"Arguments cannot be null or empty");
 
             try
             {
                 var newArgs = Converter<T>.Convert(args);
                 await action(newArgs);
-                return new CliNoCommandResult(true, null);
+                return new CliNoCommandResult(true, arguments);
             }
             catch (CliException ex)
             {
-                return new CliNoCommandResult(false, ex.Message);
+                return new CliNoCommandResult(false, arguments, ex.Message);
             }
         }
 

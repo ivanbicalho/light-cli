@@ -23,4 +23,16 @@ namespace LightCli.Tests.ConfigurationTests.ValidArgs
         [IndexArg(3, required: false)]
         public int Arg3 { get; set; }
     }
+
+    public class ValidRequiredIndexArgsC : IArgs
+    {
+        [IndexArg(1)]
+        public int Arg1 { get; set; }
+
+        [IndexArg(2, required: false)]
+        public int Arg2 { get; set; }
+
+        [IndexArg(3, required: false)]
+        public int Arg3 { get; set; }
+    }
 }

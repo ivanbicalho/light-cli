@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Text;
 
 namespace LightCli.Args
 {
@@ -43,5 +44,40 @@ namespace LightCli.Args
         public IEnumerable<string> Names { get; }
         public string NamesAsString { get; }
         public int? Index { get; }
+
+        public string GetDefaultHelpMessage()
+        {
+            var message = new StringBuilder();
+
+            if (Optional)
+                message.Append("[");
+
+            if (Type == typeof(IndexArgAttribute))
+            {
+                message.Append("Index ");
+                message.Append(Index);
+            }
+            else
+            {
+                message.Append(NamesAsString);
+            }
+
+            if (Optional)
+                message.Append("]");
+
+            message.Append(": ");
+            message.Append(Description);
+
+            if (!Description.EndsWith("."))
+                message.Append(".");
+
+            if (DefaultValue != null)
+            {
+                message.Append(" Default value: ");
+                message.Append(DefaultValue);
+            }
+
+            return message.ToString();
+        }
     }
 }

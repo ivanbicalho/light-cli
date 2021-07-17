@@ -68,6 +68,14 @@ namespace LightCli.Tests.ConfigurationTests
             Assert.Equal(0, commandB.Args.Arg1);
             Assert.Equal(0, commandB.Args.Arg2);
             Assert.Equal(0, commandB.Args.Arg3);
+
+            args = new[] { "generic", "1" };
+            var commandC = new GenericCommand<ValidRequiredIndexArgsC>();
+            await Util.Run(args, commandC);
+
+            Assert.Equal(1, commandC.Args.Arg1);
+            Assert.Equal(0, commandC.Args.Arg2);
+            Assert.Equal(0, commandC.Args.Arg3);
         }
     }
 }

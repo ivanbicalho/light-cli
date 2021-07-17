@@ -40,7 +40,6 @@ namespace LightCli.Commands
         public void ShowDefaultHelp()
         {
             Console.WriteLine("Available arguments:");
-            Console.WriteLine();
 
             var arguments = Activator.CreateInstance<T>().GetArgumentsInfo();
 

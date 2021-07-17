@@ -25,7 +25,6 @@ namespace LightCli.Results
         public void ShowDefaultArgsHelp()
         {
             Console.WriteLine("Available arguments:");
-            Console.WriteLine();
 
             if (!_arguments.Any())
             {

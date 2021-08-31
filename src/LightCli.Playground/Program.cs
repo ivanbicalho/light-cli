@@ -6,6 +6,7 @@ using LightCli.Printers.Custom;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LightCli.Commands;
 
 namespace LightCli.Playground
 {
@@ -76,15 +77,18 @@ namespace LightCli.Playground
 
         private static async Task BasicCommand()
         {
-            var args = new[] { "update", "-id", "1", "-n", "John" };
+            //var args = new[] { "update", "-id", "1", "-n", "John" };
+            var args = new[] { "--version" };
 
             var runner = new CliRunner();
-            runner.AddCommand(new UpdateCommand());
+            runner
+                .AddVersionCommand()
+                .AddCommand(new UpdateCommand());
             // add all the others commands
 
             var result = await runner.Run(args);
 
-            runner.ShowDefaultAvailableCommandsMessage();
+            //runner.ShowDefaultAvailableCommandsMessage();
             //Console.WriteLine(result.Message);
             //result.Command.ShowDefaultHelp();
         }

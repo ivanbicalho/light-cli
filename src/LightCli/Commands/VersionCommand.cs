@@ -21,7 +21,7 @@ namespace LightCli.Commands
         
         protected override Task Run(NoArgs args)
         {
-            var v = Assembly.GetCallingAssembly().GetName().Version;
+            var v = Assembly.GetEntryAssembly()?.GetName().Version;
             
             if (v == null)
                 return Task.CompletedTask;

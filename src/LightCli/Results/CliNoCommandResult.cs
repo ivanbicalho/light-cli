@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using LightCli.Extensions;
 
 namespace LightCli.Results
 {
@@ -34,6 +35,7 @@ namespace LightCli.Results
 
             foreach (var argument in _arguments)
             {
+                ConsoleExtensions.WriteTab();
                 Console.WriteLine(argument.GetDefaultHelpMessage());
             }
 

@@ -5,6 +5,7 @@ using LightCli.Results;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using LightCli.Extensions;
 
 namespace LightCli
 {
@@ -99,10 +100,10 @@ namespace LightCli
         public void ShowDefaultAvailableCommandsMessage()
         {
             Console.WriteLine("Available commands:");
-            Console.WriteLine();
 
             foreach (var command in Commands)
             {
+                ConsoleExtensions.WriteTab();
                 Console.Write(command.CommandName);
                 Console.Write(": ");
                 Console.Write(command.Description);

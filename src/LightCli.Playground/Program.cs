@@ -55,8 +55,8 @@ namespace LightCli.Playground
         private static async Task Main(string[] args)
         {
             //await Print();
-            //await BasicCommand();
-            await AdvancedCommand();
+            await BasicCommand();
+            //await AdvancedCommand();
             //await NoCommand();
         }
 
@@ -82,7 +82,11 @@ namespace LightCli.Playground
             runner.AddCommand(new UpdateCommand());
             // add all the others commands
 
-            await runner.Run(args);
+            var result = await runner.Run(args);
+
+            runner.ShowDefaultAvailableCommandsMessage();
+            //Console.WriteLine(result.Message);
+            //result.Command.ShowDefaultHelp();
         }
 
         private static async Task AdvancedCommand()

@@ -4,6 +4,7 @@ using LightCli.Exceptions;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using LightCli.Extensions;
 
 namespace LightCli.Commands
 {
@@ -51,6 +52,7 @@ namespace LightCli.Commands
 
             foreach (var argument in arguments)
             {
+                ConsoleExtensions.WriteTab();
                 Console.WriteLine(argument.GetDefaultHelpMessage());
             }
 

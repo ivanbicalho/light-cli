@@ -97,7 +97,7 @@ namespace LightCli
         /// <summary>
         /// Shows default message with available registered commands
         /// </summary>
-        public void ShowDefaultAvailableCommandsMessage()
+        public virtual void ShowDefaultAvailableCommandsMessage()
         {
             Console.WriteLine("Available commands:");
 

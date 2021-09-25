@@ -38,7 +38,7 @@ namespace LightCli.Commands
         /// <summary>
         /// Shows a default help message
         /// </summary>
-        public void ShowDefaultHelp()
+        public virtual void ShowDefaultHelp()
         {
             Console.WriteLine("Available arguments:");
 
